@@ -1,0 +1,62 @@
+version: "2"
+
+services:
+  nginx:
+    hostname: nginx
+    container_name: nginx
+    image: nginx:last
+    build:
+      context: ../
+      dockerfile: docker/contaners/nginx/Dockerfile
+      args:
+        USER_UID: ${USER_UID}
+        USER_GID: ${USER_GID}
+    working_dir: /var/www/job
+    volumes:
+      - ./contaners/nginx/conf/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ../:/var/www/job
+    ports:
+      - 80:80
+    links:
+      - php-fpm
+
+  percona:
+    hostname: percona
+    image: percona:5.7.25-centos
+    container_name: percona
+    volumes:
+      - ./contaners/percona/conf:/etc/mysql/conf.d
+      - percona:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: job
+    ports:
+      - 3306:3306
+
+  php-fpm:
+    hostname: php-fpm
+    container_name: php-fpm
+    image: php-fpm:last
+    build:
+      context: ../
+      dockerfile: docker/contaners/php-fpm/Dockerfile
+      args:
+        USER_UID: ${USER_UID}
+        USER_GID: ${USER_GID}
+    working_dir: /var/www/job
+    volumes:
+      - ../:/var/www/job
+      - ./contaners/php-fpm/conf/my.ini:/usr/local/etc/php/conf.d/my.ini
+      - ./contaners/php-fpm/conf/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    links:
+      - percona
+    expose:
+      - 10000
+    environment:
+      PHP_IDE_CONFIG: serverName=job.docker
+      XDEBUG_REMOTE_HOST: ${XDEBUG_REMOTE_HOST}
+      REMOTE_CONNECT_BACK: ${REMOTE_CONNECT_BACK}
+
+volumes:
+  percona:
+    driver: local

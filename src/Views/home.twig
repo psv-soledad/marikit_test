@@ -1,0 +1,47 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+    <h1>Добро пожаловать!</h1>
+
+    <p>Для получения новостей с сайта RBC выполните команду ниже...:</p>
+
+    <div class="card-panel grey darken-3" style="color: white">
+        <pre><code>php console.php parse</code></pre>
+    </div>
+
+    <p>Можно попробывать выбрать побольше записей:</p>
+
+    <div class="card-panel grey darken-3" style="color: white">
+        <pre><code>php console.php parse --limit=40</code></pre>
+    </div>
+
+    <p>Можно попробывать выбрать из разных регионов:</p>
+
+    <div class="card-panel grey darken-3" style="color: white">
+        <pre><code>php console.php parse --limit=40 --project=rbcnews.spb_sz</code></pre>
+    </div>
+
+    <p>Статьи с RBC:</p>
+
+    <ul class="collection">
+
+        {% for article in articles %}
+            <li class="collection-item">
+
+                <i class="mdi-editor-insert-comment circle"></i>
+
+                <span class="title">{{ article.title }}</span>
+
+                <p>{{ article.content|length > 200 ? article.content|slice(0, 200) ~ '...' : article.content}}</p>
+
+                <p><a href="/article/{{ article.id }}">Хочу все</a></p>
+
+            </li>
+        {% endfor %}
+
+    </ul>
+
+    <hr/>
+
+{% endblock %}

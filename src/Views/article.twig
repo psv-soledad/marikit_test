@@ -1,0 +1,16 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+    <h1>{{ article.title }}</h1>
+
+    {% if article.img %}
+        <img style=" width: 100%;" src="{{ article.img }}" alt="" />
+    {% endif %}
+
+    <blockquote class="flow-text">{{ article.content }}</blockquote>
+
+    <p><a href="/" class="btn">Вернуться на главную</a></p>
+
+    <hr/>
+{% endblock %}

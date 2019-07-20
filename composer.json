@@ -1,0 +1,22 @@
+{
+    "name": "job/test",
+    "license": "MIT",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "JobTest\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.2",
+        "php-di/php-di": "^6.0",
+        "nikic/fast-route": "~0.5.0",
+        "twig/twig": "^1.18",
+        "mnapoli/silly": "^1.7",
+        "guzzlehttp/guzzle": "^6.3",
+        "electrolinux/phpquery": "^0.9.6",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "ext-mysql": "*"
+    }
+}
