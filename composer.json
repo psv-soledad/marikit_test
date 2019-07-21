@@ -16,7 +16,6 @@
         "guzzlehttp/guzzle": "^6.3",
         "electrolinux/phpquery": "^0.9.6",
         "ext-json": "*",
-        "ext-pdo": "*",
-        "ext-mysql": "*"
+        "ext-pdo": "*"
     }
 }
